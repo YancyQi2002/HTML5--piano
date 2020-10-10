@@ -174,7 +174,7 @@
 		}
 		
 		/* 移动端样式 */
-		@media (max-width: 520px) {
+		@media (max-width: 520px) and (min-width: 301px) {
 			.button {
 				top: 80px;
 			}
@@ -197,6 +197,11 @@
 			}
 			#text{
 				top:75vh;
+			}
+		}
+		@media (max-width: 300px) {
+			.title>h1 {
+    				padding-top: 40px;
 			}
 		}
 		@media (max-heighth: 500px) {
