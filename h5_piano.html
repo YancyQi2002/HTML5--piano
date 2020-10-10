@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="Description" content="">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+	<title>piano</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		html{
+			width: 100vw;
+			height: 100vh;
+			user-select: none;
+		}
+		.top {
+			padding: 16px;
+		}
+		.title {
+			text-align: center;
+			font-family: "century gothic";
+		}
+		.form-control {
+			padding-left:20px;
+			min-height: calc(1.6em + 0.4rem + 2px);
+			font-size: 1rem;
+			font-weight: 200;
+			line-height: 2;
+			color: #495057;
+			background-color: #fff;
+			background-clip: padding-box;
+			border: 1px solid #ced4da;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			border-radius: 1.25rem;
+			transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+		}
+		#check {
+			width: 60px;
+			height: 30px;
+			border: 1px solid #ced4da;
+			border-radius: 1.25rem;
+		}
+		
+		/*-------------介绍--------------*/
+		.button{
+			position: absolute;
+			left:110px;
+			top:70px;
+			width:110px;
+			height:30px;
+			color: white;
+			line-height: 30px;
+			text-align: center;
+			background-color: #A5DE37;
+			border-color: #A5DE37;
+			border-radius: 200px;
+			-webkit-box-shadow: 0 7px 0 #8bc220, 0 8px 3px rgba(0, 0, 0, 0.3);
+			box-shadow: 0 7px 0 #8bc220, 0 8px 3px rgba(0, 0, 0, 0.3);
+			user-select: none;	/*--让文字无法被选中--*/
+			transition-duration: .3s;
+		}
+		.button:hover{
+			background-color:#b9e563;
+			border-color:#b9e563;
+			box-shadow: 0 7px 0 #84b91f, 0 8px 3px rgba(0, 0, 0, 0.3);
+		}
+		.button:active {
+			color:#8bc220;
+			text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
+			background-color:#a1d243;
+			border-color:#a1d243;
+			box-shadow: 0 2px 0 #6b9619, 0 3px 3px rgba(0, 0, 0, 0.2);
+			transition-property: all;
+			transition-duration: .15s;
+		}
+		#js{
+			display: none;
+			position: absolute;
+			padding-left: 10px;
+			top:110px;
+			left:110px;
+			width: 350px;
+			height: 200px;
+			color: rgb(56, 56, 56);
+			line-height: 30px;
+			background-color: rgb(244, 226, 255);
+			border: rgb(255, 255, 255) solid 3px;
+			border-style:double;
+			border-radius: 10px;
+		}
+		
+		/*-------钢琴部分--------*/
+		ul{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width:480px;
+			height:360px;
+			transform: translate(-50%, -50%);
+		}
+		li{
+			position: relative;
+			float:left;
+			list-style-type: none;
+		}
+		li>div{
+			display:table-cell;
+			width: 60px;
+			height: 360px;
+			text-align: center;
+			background: rgba(255,255,255,.3);
+			border: 1px solid;
+			border-color:rgba(0, 0, 0, .8);
+			border-bottom-left-radius : 8px;
+			border-bottom-right-radius: 8px;
+			box-sizing: border-box;
+			box-shadow: /*inset  3px 0  10px  #c9c6c6,*/
+						inset 5px -8px  0  #00000023;
+			vertical-align: bottom;
+		}
+		li:not(:last-child)>div{
+			border-right: none;
+		}
+		
+		/* 当白键按下时的样式 */
+		li>div:active{
+			box-shadow: inset 3px -2px  0  #00000036;
+			background: linear-gradient(45deg, rgba(255,255,255,.7), rgba(255,255,255,.5));
+		}
+		.white_active{
+			box-shadow: inset 3px -2px  0  #00000036;
+			background: linear-gradient(45deg, rgba(255,255,255,.7), rgba(255,255,255,.5));
+		}
+		.show{
+			background: rgb(255, 97, 97);
+		}
+		
+		li>p{
+			position: absolute;
+			top:0;
+			left: 40px;
+			width: 40px;
+			height: 200px;
+			background-color: #000;
+			border-bottom-left-radius : 5.5px;
+			border-bottom-right-radius: 5.5px;
+			box-shadow: inset 5px -7px 0 #2c2c2c;
+			z-index: 999;
+		}
+		li>p:hover{
+			background: linear-gradient(45deg, #4c4c4c, #444444);
+		}
+		
+		/* 当黑键按下时的样式 */
+		li>p:active{
+			box-shadow:inset 3px -5px 0 #2c2c2c;
+		}
+		.black_active{
+			box-shadow:inset 3px -5px 0 #2c2c2c;
+		}
+		#text{
+			position: absolute;
+			top:calc(50vh + 180px);
+			left: 50%;
+			width: 200px;
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+			transform: translate(-50%);
+		}
+		
+		/* 移动端样式 */
+		@media (max-width: 520px){
+			ul{
+				width: 98vw;
+				height: 50vh;
+			}
+			li>div{
+				width: 12vw;
+				height: 50vh;
+			}
+			li>p{
+				left: 7vw;
+				width: 10vw;
+				height: 25vh;
+			}
+			#text{
+				top:75vh;
+			}
+		}
+	</style>
+</head>
+<body>
+		<div id="sy" onclick="Mtued()"></div>
+		<div class="top">
+			请输入歌曲名：
+			<input type="text" class="form-control" id="song" placeholder="请输入歌曲名">
+			<button id="check">确定</button>
+		</div>
+		<div class="title">
+			<h1>HTML5--Piano</h1>
+		</div>
+		<ul>
+			<li><div></div><p></p></li>
+			<li><div></div><p></p></li>
+			<li><div></div></li>
+			<li><div></div><p></p></li>
+			<li><div></div><p></p></li>
+			<li><div></div><p></p></li>
+			<li><div></div></li>
+			<li><div></div></li>
+		</ul>
+		<div id="text"></div>
+		<div class="button" id="btn-js">
+			<a>使用介绍</a>
+		</div>
+		<div id="js">
+			使用键盘上的S~L键操作钢琴白键,E,R,Y,U,I操作钢琴黑键，也可以通过鼠标点击来弹奏钢琴。
+			可通过快捷键V键控制琴键上数字的显示与隐藏。目前只支持四首歌曲，晴天，最长的电影，同桌的你，送别。
+		</div>
+		<!-- 参考 @听见下雨声 -->
+	</body>
+<script src="piano.js"></script>
+</html>
